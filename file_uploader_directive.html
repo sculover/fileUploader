@@ -1,0 +1,49 @@
+<div>
+	<button class="btn btn-primary" style="position: relative;">
+		<input type="file" nv-file-select="" multiple="" uploader="fileUploader"  class="file-paperclip block xkd-file-button-one"/>
+		{{displaytext}}
+	</button>
+	<div class="col-sm-12 no-padder">
+		<table class="table bg-white-only b-a" ng-show="fileUploader.queue.length>0">
+			<thead>
+				<tr>
+					<th width="auto">文件名</th>
+					<th ng-show="fileUploader.isHTML5">大小</th>
+					<th ng-show="fileUploader.isHTML5">进度</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in fileUploader.queue">
+					<td><strong>{{ item.file.name }}</strong></td>
+					<td ng-show="fileUploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+					<td ng-show="fileUploader.isHTML5">
+						<div class="progress progress-sm m-b-none m-t-xs">
+							<div class="progress-bar bg-info" role="progressbar"
+								 ng-style="{ 'width': item.progress + '%' }">
+							</div>
+						</div>
+					</td>
+					<td class="text-center">
+						<span ng-show="item.isSuccess" class="text-success">
+							<i class="glyphicon glyphicon-ok"></i>
+						</span>
+						<span ng-show="item.isCancel" class="text-warning">
+							<i class="glyphicon glyphicon-ban-circle"></i>
+						</span>
+						<span ng-show="item.isError" class="text-danger">
+							<i class="glyphicon glyphicon-remove"></i>
+						</span>
+					</td>
+					<td nowrap>
+						<button type="button" class="btn btn-primary btn-xs" ng-click="removeFile(item)">移除</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="label-box" ng-show="fileUploader.queue.length>0">
+			<button ng-click="upload()" class="btn btn-success btn-block">确认上传文件</button>
+		</div>
+	</div>
+</div>
