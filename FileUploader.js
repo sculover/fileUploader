@@ -17,12 +17,22 @@ app.directive('fileUploaderDirective',  function() {
 			'fileUploader' : '=uploader',
 			'type':'&'
 		},
-		link : link
+		link : link,
+		/*controller : ['$scope', function($scope) {
+			$scope.disableUpload = true;
+					
+		}]*/
 	}
 
 	function link (scope, element, attrs) {
+		// 默认上传文件按钮是enabled
+		scope.disableUpload = false;
+		scope.fileSizeExceed = false;
+
 		var fileUploader = scope.fileUploader;
+
 		fileUploader.uploadedFiles = [];
+
 		scope.upload=function(){
 			// 上传文件
 			fileUploader.onBeforeUploadItem = function(item) {
@@ -42,6 +52,7 @@ app.directive('fileUploaderDirective',  function() {
 		};
 		scope.removeFile = function(item) {
 			item.remove();
+			defectFileSize(scope.fileUploader.queue, scope);
 			var len = fileUploader.uploadedFiles.length;
 			for (var i = 0; i < len; i++) {
 				if (fileUploader.uploadedFiles[i].item.$$hashKey == item.$$hashKey) {
@@ -49,6 +60,32 @@ app.directive('fileUploaderDirective',  function() {
 				}
 			}
 		};
+
+		fileUploader.onAfterAddingAll = function() {
+			defectFileSize(scope.fileUploader.queue, scope);
+		}
+	}
+	// 校验文件大小
+	function defectFileSize(arr, scope) {
+		var _len = arr ? arr.length : 0;
+		if (_len > 0) {
+			for (var i = 0; i < _len; i++) {
+				var _tempFileSize = arr[i].file.size/1024/1024;
+				if (_tempFileSize >= 10) {
+					scope.fileSizeExceed = true;
+					scope.disableUpload = true;
+					break;
+				} else {
+					scope.fileSizeExceed = false;
+				}
+			}
+		} else {
+			scope.fileSizeExceed = false;
+		}
+
+		if (!scope.fileSizeExceed) {
+			scope.disableUpload = false;
+		}
 	}
 
 

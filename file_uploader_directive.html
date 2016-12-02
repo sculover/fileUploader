@@ -3,7 +3,7 @@
 		<input type="file" nv-file-select="" multiple="" uploader="fileUploader"  class="file-paperclip block xkd-file-button-one"/>
 		{{displaytext}}
 	</button>
-	<div class="col-sm-12 no-padder">
+	<div class="col-sm-12 no-padder m-b">
 		<table class="table bg-white-only b-a" ng-show="fileUploader.queue.length>0">
 			<thead>
 				<tr>
@@ -15,7 +15,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in fileUploader.queue">
+				<tr ng-repeat="item in fileUploader.queue track by $index">
 					<td><strong>{{ item.file.name }}</strong></td>
 					<td ng-show="fileUploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
 					<td ng-show="fileUploader.isHTML5">
@@ -42,8 +42,9 @@
 				</tr>
 			</tbody>
 		</table>
+		<div style="color : red" ng-show="fileSizeExceed">*请移除大于10M的文件</div>
 		<div class="label-box" ng-show="fileUploader.queue.length>0">
-			<button ng-click="upload()" class="btn btn-success btn-block">确认上传文件</button>
+			<button ng-click="upload()" class="btn btn-success btn-block" ng-disabled="disableUpload">确认上传文件</button>
 		</div>
 	</div>
 </div>
