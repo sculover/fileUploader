@@ -1,11 +1,13 @@
 <div>
-	<div class="col-sm-3 text-right">
+	<!-- <div class="col-sm-3 text-right"> -->
+	<div class="{{configure.buttonClass}}">
 		<button class="btn btn-primary" style="position: relative;">
-			<input type="file" nv-file-select="" multiple="" uploader="fileUploader"  class="file-paperclip block xkd-file-button-one"/>
-			{{displaytext}}
+			<input type="file" nv-file-select="" multiple uploader="fileUploader" class="file-paperclip block xkd-file-button-one" accept="{{configure.accept}}" /> 
+			{{configure.displaytext}} {{configure.accept}}
 		</button>
 	</div>
-	<div class="col-sm-9 m-b">
+	<!-- <div class="col-sm-9 m-b"> -->
+	<div class="{{configure.fileSelectClass}}">
 		<table class="table bg-white-only b-a" ng-show="fileUploader.queue.length>0">
 			<thead>
 				<tr>

@@ -11,11 +11,12 @@ app.directive('fileUploaderDirective',  function() {
 		replace : true,
 		templateUrl : 'js/directives/file-uploader/file_uploader_directive.html',
 		scope: {
-			'displaytext' : '@displaytext',
-			'accesstoken' : '@',
-			'multipletype' : '@',
+			// 'displaytext' : '@displaytext',
+			// 'accesstoken' : '@',
+			// 'multipletype' : '@',
 			'fileUploader' : '=uploader',
-			'type':'&'
+			// 'type':'&',
+			'configure' : '=configure'
 		},
 		link : link,
 		/*controller : ['$scope', function($scope) {
@@ -37,8 +38,8 @@ app.directive('fileUploaderDirective',  function() {
 			// 上传文件
 			fileUploader.onBeforeUploadItem = function(item) {
 				item.formData=[{
-					"accesstoken": scope.accesstoken,
-					"type" : fileUploader.type,
+					"accesstoken": scope.configure.accesstoken,
+					"type" : scope.configure.type,
 				}];
 			};
 			fileUploader.onSuccessItem = function(item, response, status, headers) {
@@ -52,7 +53,7 @@ app.directive('fileUploaderDirective',  function() {
 		};
 		scope.removeFile = function(item) {
 			item.remove();
-			defectFileSize(scope.fileUploader.queue, scope);
+			detectFileSize(scope.fileUploader.queue, scope);
 			var len = fileUploader.uploadedFiles.length;
 			for (var i = 0; i < len; i++) {
 				if (fileUploader.uploadedFiles[i].item.$$hashKey == item.$$hashKey) {
@@ -62,11 +63,11 @@ app.directive('fileUploaderDirective',  function() {
 		};
 
 		fileUploader.onAfterAddingAll = function() {
-			defectFileSize(scope.fileUploader.queue, scope);
+			detectFileSize(scope.fileUploader.queue, scope);
 		}
 	}
 	// 校验文件大小
-	function defectFileSize(arr, scope) {
+	function detectFileSize(arr, scope) {
 		var _len = arr ? arr.length : 0;
 		if (_len > 0) {
 			for (var i = 0; i < _len; i++) {
@@ -89,4 +90,23 @@ app.directive('fileUploaderDirective',  function() {
 	}
 
 
+});
+
+// multiple input file directive
+app.directive('ngMultiple', function() {
+	return {
+		restrict : 'A',
+		scope : {
+			ngMultiple : '='
+		},
+		link : function (scope, element) {
+			scope.$watch('ngMultiple', function () {
+				if (newValue) {
+					element.attrs('multiple','multiple');
+				} else {
+					element.removeAttr(multiple);
+				}
+			});
+		}
+	}
 });
