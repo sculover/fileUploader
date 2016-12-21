@@ -52,7 +52,7 @@ app.directive('fileUploaderDirective',  function() {
 		};
 		scope.removeFile = function(item) {
 			item.remove();
-			defectFileSize(scope.fileUploader.queue, scope);
+			detectFileSize(scope.fileUploader.queue, scope);
 			var len = fileUploader.uploadedFiles.length;
 			for (var i = 0; i < len; i++) {
 				if (fileUploader.uploadedFiles[i].item.$$hashKey == item.$$hashKey) {
@@ -62,11 +62,11 @@ app.directive('fileUploaderDirective',  function() {
 		};
 
 		fileUploader.onAfterAddingAll = function() {
-			defectFileSize(scope.fileUploader.queue, scope);
+			detectFileSize(scope.fileUploader.queue, scope);
 		}
 	}
 	// 校验文件大小
-	function defectFileSize(arr, scope) {
+	function detectFileSize(arr, scope) {
 		var _len = arr ? arr.length : 0;
 		if (_len > 0) {
 			for (var i = 0; i < _len; i++) {
