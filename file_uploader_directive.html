@@ -1,9 +1,11 @@
 <div>
-	<button class="btn btn-primary" style="position: relative;">
-		<input type="file" nv-file-select="" multiple="" uploader="fileUploader"  class="file-paperclip block xkd-file-button-one"/>
-		{{displaytext}}
-	</button>
-	<div class="col-sm-12 no-padder m-b">
+	<div class="col-sm-3 text-right">
+		<button class="btn btn-primary" style="position: relative;">
+			<input type="file" nv-file-select="" multiple="" uploader="fileUploader"  class="file-paperclip block xkd-file-button-one"/>
+			{{displaytext}}
+		</button>
+	</div>
+	<div class="col-sm-9 m-b">
 		<table class="table bg-white-only b-a" ng-show="fileUploader.queue.length>0">
 			<thead>
 				<tr>
@@ -15,7 +17,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in fileUploader.queue track by $index">
+				<tr ng-repeat="item in fileUploader.queue track by $index" class="text-left">
 					<td><strong>{{ item.file.name }}</strong></td>
 					<td ng-show="fileUploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
 					<td ng-show="fileUploader.isHTML5">
