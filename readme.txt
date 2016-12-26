@@ -24,7 +24,7 @@ $scope.fileUploaderConfigure = {
 ---html---
 <div file-uploader-directive uploader="protocolUploader" configure="fileUploaderConfigure"></div>
 ----输出---
-上传的文件在testUploader.uploadedFiles里面
+上传的文件在protocolUploader.uploadedFiles里面
 
 
 TODO: controle file multiple select
